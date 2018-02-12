@@ -15,7 +15,12 @@ const transactionsReducer = (state = initialState, action) => {
       return newState;
     }
     case transactionsActions.types.TRANSACTION_REMOVE: {
-      return state;
+      const { transaction } = payload;
+
+      const newState = { ...state };
+      delete newState[transaction.id];
+
+      return newState;
     }
     default:
       return state;

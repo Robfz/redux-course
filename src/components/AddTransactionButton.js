@@ -8,7 +8,14 @@ const getRandomId = () => Math.floor(Math.random() * 0x1000000).toString(16);
 const AddTransactionButton = (props) => {
   const { addTransaction } = props;
 
-  const handleClick = () => addTransaction({ transaction: { id: getRandomId() } });
+  const transaction= {
+    crypto: 'ETH',
+    type: 'buy',
+    amount: 10,
+    price: 15000,
+  };
+
+  const handleClick = () => addTransaction({ transaction: { ...transaction, id: getRandomId(), } });
 
   return (
     <button onClick={handleClick}>
