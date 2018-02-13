@@ -1,7 +1,17 @@
 const logger = (store) => (next) => (action) => {
-  console.log(action);
+  const { type } = action;
 
-  next(action);
+  const stateBeforeReducers = store.getState();
+  const nextMiddlewares = next(action);
+  const stateAfterReducers = store.getState();
+
+  console.group(type);
+  console.log(stateBeforeReducers);
+  console.log(action);
+  console.log(stateAfterReducers);
+  console.groupEnd();
+
+  return nextMiddlewares;
 };
 
 export default logger;

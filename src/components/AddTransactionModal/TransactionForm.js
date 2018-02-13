@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import transactions from '../../actions/transactions';
+import transactionsActions from '../../actions/transactions';
+import transactionModalActions from '../../actions/transactionModal';
 
 const BUY_OPTION = 'buy';
 const SELL_OPTION = 'sell';
@@ -52,7 +53,10 @@ class TransactionForm extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    const { addTransaction } = this.props;
+    const {
+      addTransaction,
+      hideTransactionModal,
+    } = this.props;
 
     const transaction = {
       id: getRandomId(),
@@ -63,6 +67,7 @@ class TransactionForm extends Component {
     };
 
     addTransaction({ transaction });
+    hideTransactionModal();
   }
 
   isOptionChecked = (option) => {
@@ -122,10 +127,12 @@ class TransactionForm extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  const { addTransaction } = transactions.creators;
+  const { addTransaction } = transactionsActions.creators;
+  const { hideTransactionModal } = transactionModalActions.creators;
 
   return bindActionCreators({
     addTransaction,
+    hideTransactionModal,
   }, dispatch);
 };
 
