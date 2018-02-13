@@ -21,7 +21,7 @@ const AddTransactionModal = (props) => {
         Modal
       </div>
       <TransactionForm />
-      <button onClick={hideTransactionModal}>
+      <button onClick={() => hideTransactionModal()}>
         Close
       </button>
     </Modal>

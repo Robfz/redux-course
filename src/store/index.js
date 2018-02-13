@@ -1,12 +1,15 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import rootReducer from '../reducers';
+import customMiddleware from '../middleware';
 
 const initialState = {};
 const enhancers = [];
-const middlewares = [];
+const middleware = [
+  ...customMiddleware,
+];
 
 const composedEnhancers = compose(
-  applyMiddleware(...middlewares),
+  applyMiddleware(...middleware),
   ...enhancers,
 );
 

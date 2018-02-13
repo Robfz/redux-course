@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import transactionModalActions from '../../actions/transactionModal';
 
 const AddTransactionButton = ({ showTransactionModal }) =>
-  <button onClick={showTransactionModal}>
+  <button onClick={() => showTransactionModal()}>
     Add Transaction
   </button>;
 
