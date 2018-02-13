@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import values from 'ramda/src/values';
-import AddTransactionModal from '../AddTransactionModal';
+import AddTransactionButton from '../AddTransactionButton';
 import Transaction from '../Transaction';
 import {
   TransactionsListContainerStyled,
@@ -14,7 +14,7 @@ const TransactionsList = (props) => {
 
   return (
     <div>
-      <AddTransactionModal />
+      <AddTransactionButton />
       <TransactionsListContainerStyled>
         { transactions }
       </TransactionsListContainerStyled>

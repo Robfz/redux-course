@@ -1,52 +1,47 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import Modal from 'react-modal';
 import TransactionForm from './TransactionForm';
+import transactionModalActions from '../../actions/transactionModal';
 
 Modal.setAppElement('#root');
 
-class AddTransactionModal extends Component {
-  constructor(props) {
-    super(props);
+const AddTransactionModal = (props) => {
+  const {
+    isModalOpen,
+    hideTransactionModal,
+  } = props;
 
-    this.state = {
-      isModalOpen: false,
-    };
-  }
-
-  setIsModalOpen(isModalOpen) {
-    this.setState({ isModalOpen });
-  }
-
-  handleNewTransactionClick = () => {
-    this.setIsModalOpen(true);
-  }
-
-  handleCloseButtonClick = () => {
-    this.setIsModalOpen(false);
-  }
-
-  render() {
-    const { isModalOpen } = this.state;
-
-    return (
+  return (
+    <Modal
+      isOpen={isModalOpen}
+    >
       <div>
-        <button onClick={this.handleNewTransactionClick}>
-          New transaction
-        </button>
-        <Modal
-          isOpen={isModalOpen}
-        >
-          <div>
-            Modal
-          </div>
-          <TransactionForm />
-          <button onClick={this.handleCloseButtonClick}>
-            Close
-          </button>
-        </Modal>
+        Modal
       </div>
-    ); 
-  }
+      <TransactionForm />
+      <button onClick={hideTransactionModal}>
+        Close
+      </button>
+    </Modal>
+  );
 }
 
-export default AddTransactionModal;
+const mapStateToProps = (state) => {
+  const { isModalOpen } = state.transactionModal;
+
+  return {
+    isModalOpen,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  const { hideTransactionModal } = transactionModalActions.creators;
+
+  return bindActionCreators({
+    hideTransactionModal,
+  }, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddTransactionModal);
