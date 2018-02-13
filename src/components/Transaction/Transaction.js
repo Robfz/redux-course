@@ -1,7 +1,12 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import transactions from '../actions/transactions';
+import transactions from '../../actions/transactions';
+import {
+  CryptoLogoStyled,
+  TransactionContainerStyled,
+} from './Transaction.styled';
+import xrpLogo from '../../res/xrp.png';
 
 const Transaction = (props) => {
   const {
@@ -13,7 +18,8 @@ const Transaction = (props) => {
     removeTransaction({ transaction });
 
   return (
-    <div>
+    <TransactionContainerStyled>
+      <CryptoLogoStyled src={xrpLogo} />
       <div>{transaction.id}</div>
       <div>Transaction type: {transaction.type}</div>
       <div>Transaction amount: {transaction.amount}</div>
@@ -21,7 +27,7 @@ const Transaction = (props) => {
       <button onClick={handleDeleteButtonClick}>
         Delete
       </button>
-    </div>
+    </TransactionContainerStyled>
   );
 };
 
