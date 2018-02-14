@@ -3,28 +3,15 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import transactionsActions from '../../actions/transactions';
 import transactionModalActions from '../../actions/transactionModal';
+import {
+  InputContainerStyled,
+  RadioButtonStyled,
+  TransactionFormStyled,
+} from './TransactionForm.styled';
+import { SUPPORTED_CRYPTOS } from '../../constants/cryptos';
 
 const BUY_OPTION = 'buy';
 const SELL_OPTION = 'sell';
-
-const SUPPORTED_CRYPTOS = [
-  {
-    name: 'Bitcoin',
-    ticker: 'BTC',
-  },
-  {
-    name: 'Ethereum',
-    ticker: 'ETH',
-  },
-  {
-    name: 'Litecoin',
-    ticker: 'LTC',
-  },
-  {
-    name: 'Ripple',
-    ticker: 'XRP',
-  },
-];
 
 const getRandomId = () => Math.floor(Math.random() * 0x1000000).toString(16);
 
@@ -64,6 +51,7 @@ class TransactionForm extends Component {
       type: this.state.txnType,
       amount: this.state.txnAmount,
       price: this.state.txnPrice,
+      date: new Date(),
     };
 
     addTransaction({ transaction });
@@ -102,26 +90,32 @@ class TransactionForm extends Component {
     const { txnCrypto } = this.state;
 
     return (
-      <form onSubmit={this.handleSubmit}>
-        Cryptocurrency <CryptoSelector value={txnCrypto} onChange={this.setTxnCrypto}/>
-        Amount <input type="text" onChange={this.setTxnAmount} />
-        Price <input type="text" onChange={this.setTxnPrice} />
-        <div>
+      <TransactionFormStyled onSubmit={this.handleSubmit}>
+        <InputContainerStyled>
+          Cryptocurrency <CryptoSelector value={txnCrypto} onChange={this.setTxnCrypto}/>
+        </InputContainerStyled>
+        <InputContainerStyled>
+          Amount <input type="text" onChange={this.setTxnAmount} />
+        </InputContainerStyled>
+        <InputContainerStyled>
+          Price <input type="text" onChange={this.setTxnPrice} />
+        </InputContainerStyled>
+        <InputContainerStyled>
           Buy
-          <input
+          <RadioButtonStyled
             type="radio"
             checked={this.isOptionChecked(BUY_OPTION)}
             onChange={() => this.setTxnType(BUY_OPTION)}
           />
           Sell
-          <input
+          <RadioButtonStyled
             type="radio"
             checked={this.isOptionChecked(SELL_OPTION)}
             onChange={() => this.setTxnType(SELL_OPTION)}
           />
-        </div>
+        </InputContainerStyled>
         <input type="submit" value="Save" />
-      </form>
+      </TransactionFormStyled>
     );
   }
 }

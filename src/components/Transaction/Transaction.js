@@ -1,15 +1,14 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import transactions from '../../actions/transactions';
 import {
   CryptoLogoStyled,
   TransactionContainerStyled,
+  SectionContainer,
 } from './Transaction.styled';
-import xrpLogo from '../../res/xrp.png';
+import cryptoImages from '../../res/cryptoImages';
 
 const Transaction = (props) => {
   const {
+    cryptoPrice,
     removeTransaction,
     transaction,
   } = props;
@@ -19,24 +18,31 @@ const Transaction = (props) => {
 
   return (
     <TransactionContainerStyled>
-      <CryptoLogoStyled src={xrpLogo} />
-      <div>{transaction.id}</div>
-      <div>Transaction type: {transaction.type}</div>
-      <div>Transaction amount: {transaction.amount}</div>
-      <div>Cryptocurrency: {transaction.crypto}</div>
-      <button onClick={handleDeleteButtonClick}>
-        Delete
-      </button>
+      <SectionContainer width={'10%'}>
+        <CryptoLogoStyled src={cryptoImages[transaction.crypto]} />
+      </SectionContainer>
+      <SectionContainer width={'20%'}>
+        {transaction.type}
+      </SectionContainer>
+      <SectionContainer width={'20%'}>
+        {transaction.amount} {transaction.crypto}
+      </SectionContainer>
+      <SectionContainer width={'20%'}>
+        ${transaction.price} USD
+      </SectionContainer>
+      <SectionContainer width={'20%'}>
+        ${transaction.amount * transaction.price}
+      </SectionContainer>
+      <SectionContainer width={'20%'}>
+        {transaction.amount * cryptoPrice}
+      </SectionContainer>
+      <SectionContainer width={'10%'}>
+        <button onClick={handleDeleteButtonClick}>
+          Delete
+        </button>
+      </SectionContainer>
     </TransactionContainerStyled>
   );
 };
 
-const mapDispatchToProps = (dispatch) => {
-  const { removeTransaction } = transactions.creators;
-
-  return bindActionCreators({
-    removeTransaction,
-  }, dispatch);
-};
-
-export default connect(null, mapDispatchToProps)(Transaction);
+export default Transaction;

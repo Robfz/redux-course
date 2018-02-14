@@ -7,6 +7,17 @@ import transactionModalActions from '../../actions/transactionModal';
 
 Modal.setAppElement('#root');
 
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight:'-50%',
+    transform: 'translate(-50%, -50%)'
+  }
+};
+
 const AddTransactionModal = (props) => {
   const {
     isModalOpen,
@@ -16,9 +27,10 @@ const AddTransactionModal = (props) => {
   return (
     <Modal
       isOpen={isModalOpen}
+      style={customStyles}
     >
       <div>
-        Modal
+        <h3>Add a new crypto transaction</h3>
       </div>
       <TransactionForm />
       <button onClick={() => hideTransactionModal()}>
