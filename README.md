@@ -1,7 +1,9 @@
-## Install Redux dependencies
+## Install project dependencies
 
-`yarn add redux react-redux`
+`yarn`
 
-`yarn add redux-actions`
+## Run dev server
 
-`yarn add ramda`
+`yarn start`
+
+**NOTE:** I still need to provide a proper README
