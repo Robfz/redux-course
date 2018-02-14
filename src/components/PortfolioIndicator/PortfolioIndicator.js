@@ -1,6 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import values from 'ramda/src/values';
 import {
   IndicatorContainerStyled,
   TextContainerStyled,
