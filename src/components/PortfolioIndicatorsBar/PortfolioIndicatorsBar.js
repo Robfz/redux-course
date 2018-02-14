@@ -4,6 +4,7 @@ import values from 'ramda/src/values';
 import PortfolioIndicator from '../PortfolioIndicator';
 import { IndicatorsContainerStyled } from './PortfolioIndicatorsBar.styled';
 
+// Thanks: https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
 const numberWithCommas = (n) => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
 const PortfolioIndicatorsBar = (props) => {
