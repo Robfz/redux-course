@@ -5,6 +5,7 @@ import {
   SectionContainer,
 } from './Transaction.styled';
 import cryptoImages from '../../res/cryptoImages';
+import { formatForCurrency } from '../../utils';
 
 const Transaction = (props) => {
   const {
@@ -25,16 +26,16 @@ const Transaction = (props) => {
         {transaction.type}
       </SectionContainer>
       <SectionContainer width={'20%'}>
-        {transaction.amount} {transaction.crypto}
+        {transaction.amount} {(transaction.crypto).toUpperCase()}
       </SectionContainer>
       <SectionContainer width={'20%'}>
-        ${transaction.price} USD
+        ${formatForCurrency(transaction.price)} USD
       </SectionContainer>
       <SectionContainer width={'20%'}>
-        ${transaction.amount * transaction.price}
+        ${formatForCurrency(transaction.amount * transaction.price)} USD
       </SectionContainer>
       <SectionContainer width={'20%'}>
-        {transaction.amount * cryptoPrice}
+        ${formatForCurrency(transaction.amount * cryptoPrice)} USD
       </SectionContainer>
       <SectionContainer width={'10%'}>
         <button onClick={handleDeleteButtonClick}>

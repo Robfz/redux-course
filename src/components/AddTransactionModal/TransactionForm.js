@@ -17,7 +17,7 @@ const getRandomId = () => Math.floor(Math.random() * 0x1000000).toString(16);
 
 const CryptoSelector = ({ onChange, value }) => {
   const options =
-    SUPPORTED_CRYPTOS.map(({ ticker }) => <option value={ticker} key={ticker}>{ticker}</option>);
+    SUPPORTED_CRYPTOS.map(({ ticker }) => <option value={ticker} key={ticker}>{ticker.toUpperCase()}</option>);
   
   return (
     <select value={value} onChange={onChange}>
@@ -31,7 +31,7 @@ class TransactionForm extends Component {
     super(props);
 
     this.state = {
-      txnCrypto: 'ETH',
+      txnCrypto: 'eth',
       txnType: BUY_OPTION,
       txnAmount: 0,
     };
@@ -51,7 +51,6 @@ class TransactionForm extends Component {
       type: this.state.txnType,
       amount: this.state.txnAmount,
       price: this.state.txnPrice,
-      date: new Date(),
     };
 
     addTransaction({ transaction });

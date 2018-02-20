@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import values from 'ramda/src/values';
 import PortfolioIndicator from '../PortfolioIndicator';
 import { IndicatorsContainerStyled } from './PortfolioIndicatorsBar.styled';
-
-// Thanks: https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
-const numberWithCommas = (n) => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+import {
+  formatForCurrency,
+  numberWithCommas,
+} from '../../utils';
 
 const PortfolioIndicatorsBar = (props) => {
   const {
@@ -19,19 +20,19 @@ const PortfolioIndicatorsBar = (props) => {
     <IndicatorsContainerStyled>
       <PortfolioIndicator 
         title={'Total Investment'}
-        text={`$${numberWithCommas(totalInvestment)} USD`}
+        text={`$${formatForCurrency(totalInvestment)} USD`}
       />
       <PortfolioIndicator
         title={'Portfolio Value'}
-        text={`$${numberWithCommas(portfolioValue)} USD`}
+        text={`$${formatForCurrency(portfolioValue)} USD`}
       />
       <PortfolioIndicator
         title={'Profits'}
-        text={`$${numberWithCommas(profit)} USD`}
+        text={`$${formatForCurrency(profit)} USD`}
       />
       <PortfolioIndicator
         title={'% Change'}
-        text={`${percentageChange} %`}
+        text={`${numberWithCommas(percentageChange)} %`}
       />
     </IndicatorsContainerStyled>
   );
@@ -45,13 +46,13 @@ const mapStateToProps = (state) => {
 
   const totalInvestment = values(transactions).reduce(
     (total, transaction) => total + transaction.amount * transaction.price
-  , 0).toFixed(2);
+  , 0);
 
   const portfolioValue = values(transactions).reduce(
     (total, transaction) => total + transaction.amount * cryptoPrices[transaction.crypto]
-  , 0).toFixed(2);
+  , 0);
 
-  const profit = (portfolioValue - totalInvestment).toFixed(2);
+  const profit = (portfolioValue - totalInvestment);
 
   let percentageChange = ((portfolioValue / totalInvestment - 1) * 100).toFixed(2);
 

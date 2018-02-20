@@ -1,19 +1,19 @@
 const SUPPORTED_CRYPTOS = [
   {
     name: 'Bitcoin',
-    ticker: 'BTC',
+    ticker: 'btc',
   },
   {
     name: 'Ethereum',
-    ticker: 'ETH',
+    ticker: 'eth',
   },
   {
     name: 'Litecoin',
-    ticker: 'LTC',
+    ticker: 'ltc',
   },
   {
     name: 'Ripple',
-    ticker: 'XRP',
+    ticker: 'xrp',
   },
 ];
 

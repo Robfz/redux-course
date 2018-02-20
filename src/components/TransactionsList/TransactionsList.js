@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import values from 'ramda/src/values';
 import AddTransactionButton from '../AddTransactionButton';
+import RefreshPricesButton from '../RefreshPricesButton';
 import Transaction from '../Transaction';
 import PortfolioIndicatorsBar from '../PortfolioIndicatorsBar';
 import {
@@ -30,6 +31,7 @@ const TransactionsList = (props) => {
     <div>
       <AddTransactionButtonContainerStyled>
         <AddTransactionButton />
+        <RefreshPricesButton />
       </AddTransactionButtonContainerStyled>
       <PortfolioIndicatorsBar />
       <TransactionsListContainerStyled>

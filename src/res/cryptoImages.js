@@ -4,10 +4,10 @@ import ltc from './ltc.png';
 import xrp from './xrp.png';
 
 const imageMap = {
-  BTC: btc,
-  ETH: eth,
-  LTC: ltc,
-  XRP: xrp,
+  btc,
+  eth,
+  ltc,
+  xrp,
 };
 
 export default imageMap;
