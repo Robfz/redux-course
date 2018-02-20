@@ -12,6 +12,8 @@ import {
 } from './TransactionsList.styled';
 import transactions from '../../actions/transactions';
 
+import AddDummyTransactionButton from '../AddDummyTransactionButton';
+
 const TransactionsList = (props) => {
   const {
     cryptoPrices,
@@ -30,6 +32,7 @@ const TransactionsList = (props) => {
   return (
     <div>
       <AddTransactionButtonContainerStyled>
+        <AddDummyTransactionButton />
         <AddTransactionButton />
         <RefreshPricesButton />
       </AddTransactionButtonContainerStyled>
