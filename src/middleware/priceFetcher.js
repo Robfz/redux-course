@@ -4,8 +4,10 @@ import cryptoPricesActions from '../actions/cryptoPrices';
 const { CRYPTO_PRICES_GET } = cryptoPricesActions.types;
 const { fetchedCryptoPrices } = cryptoPricesActions.creators;
 
+const API_URL = 'http://159.65.72.172';
+
 const fetchPrice = (dispatch) => {
-  axios.get('http://localhost:5000')
+  axios.get(`${API_URL}/prices`)
     .then((response) => dispatch(fetchedCryptoPrices({ ...response.data })));
 };
 
