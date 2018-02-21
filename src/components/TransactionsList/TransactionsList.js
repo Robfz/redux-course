@@ -1,6 +1,4 @@
-import React from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import React, { Component } from 'react';
 import values from 'ramda/src/values';
 import AddTransactionButton from '../AddTransactionButton';
 import RefreshPricesButton from '../RefreshPricesButton';
@@ -12,53 +10,72 @@ import {
 } from './TransactionsList.styled';
 import transactions from '../../actions/transactions';
 
-const TransactionsList = (props) => {
-  const {
-    cryptoPrices,
-    removeTransaction,
-  } = props;
+import store from '../../store';
 
-  const transactions = values(props.transactions).map((transaction) =>
-    <Transaction
-      key={transaction.id}
-      cryptoPrice={cryptoPrices[transaction.crypto]}
-      transaction={transaction}
-      removeTransaction={removeTransaction}
-    />
-  );
+const transactionsSelector = (state) => state.transactions;
+const cryptoPricesSelector = (state) => state.cryptoPrices;
 
-  return (
-    <div>
-      <AddTransactionButtonContainerStyled>
-        <AddTransactionButton />
-        <RefreshPricesButton />
-      </AddTransactionButtonContainerStyled>
-      <PortfolioIndicatorsBar />
-      <TransactionsListContainerStyled>
-        { transactions }
-      </TransactionsListContainerStyled>
-    </div>
-  );
-};
+class TransactionsList extends Component {
+  constructor(props) {
+    super(props);
 
-const mapStateToProps = (state) => {
-  const {
-    cryptoPrices,
-    transactions,
-  } = state;
-  
-  return {
-    cryptoPrices,
-    transactions,
-  };
-};
+    this.reduxUnsubscribe = null;
 
-const mapDispatchToProps = (dispatch) => {
-  const { removeTransaction } = transactions.creators;
+    this.state = {
+      transactions: {},
+      cryptoPrices: {},
+    };
+  }
 
-  return bindActionCreators({
-    removeTransaction,
-  }, dispatch);
-};
+  handleChangeInStore = () => {
+    const transactions = transactionsSelector(store.getState());
+    const cryptoPrices = cryptoPricesSelector(store.getState());
+    
+    this.setState({
+      cryptoPrices,
+      transactions,
+    });
+  }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TransactionsList);
+  removeTransaction = (payload) => {
+    const { removeTransaction } = transactions.creators;
+
+    store.dispatch(removeTransaction(payload));
+  }
+
+  componentDidMount() {
+    this.reduxUnsubscribe = store.subscribe(this.handleChangeInStore);
+  }
+
+  componentWillUnmount() {
+    this.reduxSubscription();
+  }
+
+  render() {
+    const { cryptoPrices } = this.state;
+
+    const transactions = values(this.state.transactions).map((transaction) =>
+      <Transaction
+        key={transaction.id}
+        cryptoPrice={cryptoPrices[transaction.crypto]}
+        transaction={transaction}
+        removeTransaction={this.removeTransaction}
+      />
+    );
+
+    return (
+      <div>
+        <AddTransactionButtonContainerStyled>
+          <AddTransactionButton />
+          <RefreshPricesButton />
+        </AddTransactionButtonContainerStyled>
+        <PortfolioIndicatorsBar />
+        <TransactionsListContainerStyled>
+          { transactions }
+        </TransactionsListContainerStyled>
+      </div>
+    );
+  }
+}
+
+export default TransactionsList;
